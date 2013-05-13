@@ -18,9 +18,10 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
 
 	public function testWhenPressureIsOkTheAlarmShouldBeOff()
 	{
+		$normalPressure = Alarm::HIGH_PRESSURE_TRESHOLD - 1;
 		$this->mockSensor->expects($this->once())
 							->method('popNextPressurePsiValue')
-							->will($this->returnValue(20));
+							->will($this->returnValue($normalPressure));
 
 		$this->alarm->check();
 		$this->assertFalse($this->alarm->alarmOn());
@@ -28,9 +29,10 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
 
 	public function testWhenPressureIsHighkTheAlarmShouldBeOn()
 	{
+		$highPressure = Alarm::HIGH_PRESSURE_TRESHOLD + 1;
 		$this->mockSensor->expects($this->once())
 							->method('popNextPressurePsiValue')
-							->will($this->returnValue(30));
+							->will($this->returnValue($highPressure));
 
 		$this->alarm->check();
 		$this->assertTrue($this->alarm->alarmOn());
@@ -38,9 +40,10 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
 
 	public function testWhenPressureIsLowkTheAlarmShouldBeOn()
 	{
+		$lowPressure = Alarm::LOW_PRESSURE_TRESHOLD - 1;
 		$this->mockSensor->expects($this->once())
 							->method('popNextPressurePsiValue')
-							->will($this->returnValue(10));
+							->will($this->returnValue($lowPressure));
 
 		$this->alarm->check();
 		$this->assertTrue($this->alarm->alarmOn());
