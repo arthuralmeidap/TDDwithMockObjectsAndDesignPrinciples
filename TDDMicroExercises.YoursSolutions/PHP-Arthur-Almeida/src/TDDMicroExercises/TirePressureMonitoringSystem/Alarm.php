@@ -11,10 +11,14 @@ class Alarm
 	private $alarmOn;
 	private $alarmCount;
 
-	public function __construct() {
-		$this->sensor 		= new Sensor();
+	public function __construct( $sensor = null ) {
+		if(is_null($sensor)) {
+			$this->sensor 		= new Sensor();
+		}else{
+			$this->sensor 		= $sensor;
+		}
 		$this->alarmOn 		= false;
-		$this->alarmCount	= 0;		
+		$this->alarmCount	= 0;
 	}
 
 
