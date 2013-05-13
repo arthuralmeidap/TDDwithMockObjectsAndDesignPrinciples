@@ -26,8 +26,7 @@ class Alarm
 	{
 		$psiPressureValue = $this->sensor->popNextPressurePsiValue();
 
-		if ($psiPressureValue < Alarm::LOW_PRESSURE_TRESHOLD
-			|| Alarm::HIGH_PRESSURE_TRESHOLD < $psiPressureValue) {
+		if (!$this->isPressureNormal($psiPressureValue)) {
 
 			$this->alarmOn = true;
 			$this->alarmCount += 1;
@@ -37,5 +36,10 @@ class Alarm
 	public function alarmOn() 
 	{
 		return $this->alarmOn;
+	}
+
+	private function isPressureNormal($psiPressureValue){
+		return ($psiPressureValue >= Alarm::LOW_PRESSURE_TRESHOLD
+			&& $psiPressureValue <= Alarm::HIGH_PRESSURE_TRESHOLD );
 	}
 }
