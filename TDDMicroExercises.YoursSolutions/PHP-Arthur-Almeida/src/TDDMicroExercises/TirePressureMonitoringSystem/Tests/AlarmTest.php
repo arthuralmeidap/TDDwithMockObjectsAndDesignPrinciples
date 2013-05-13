@@ -27,6 +27,26 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse($this->alarm->alarmOn());
 	}
 
+	public function testWhenPressureIsHighLimitTheAlarmShouldBeOff() 
+	{
+		$this->mockSensor->expects($this->once())
+							->method('popNextPressurePsiValue')
+							->will($this->returnValue(Alarm::HIGH_PRESSURE_TRESHOLD));
+
+		$this->alarm->check();
+		$this->assertFalse($this->alarm->alarmOn());	
+	}
+
+	public function testWhenPressureIsLowLimitTheAlarmShouldBeOff() 
+	{
+		$this->mockSensor->expects($this->once())
+							->method('popNextPressurePsiValue')
+							->will($this->returnValue(Alarm::LOW_PRESSURE_TRESHOLD));
+
+		$this->alarm->check();
+		$this->assertFalse($this->alarm->alarmOn());	
+	}
+
 	public function testWhenPressureIsHighkTheAlarmShouldBeOn()
 	{
 		$highPressure = Alarm::HIGH_PRESSURE_TRESHOLD + 1;
